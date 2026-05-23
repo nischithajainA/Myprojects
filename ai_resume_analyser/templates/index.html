@@ -1,0 +1,13 @@
+<h1>AI Resume Analyser</h1>
+<form action="/analyze" method="POST" enctype="multipart/form-data">
+    <label>Upload Resume:</label>
+    <input type="file" name="resume" required>
+
+    <label>Upload Job Description :</label>
+    <input type="file" name="jd">
+
+    <label>OR</label>
+    <textarea name="jd_text" placeholder="Paste job description here"></textarea>
+
+    <button type="submit">Analyze Resume</button>
+</form>
