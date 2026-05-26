@@ -1,5 +1,5 @@
 import pdfplumber
-import docx
+from docx import Document
 
 def extract_text_from_pdf(file):
     text = ""
@@ -7,7 +7,11 @@ def extract_text_from_pdf(file):
         for page in pdf.pages:
             text += page.extract_text() + "\n"
     return text
-def extract_text_from_docx(file):
-    doc = docx.Document(file)
-    return "\n".join([para.text for para in doc.paragraphs])
 
+
+def extract_text_from_docx(docx_path):
+    doc = Document(docx_path)
+
+    text = "\n".join([para.text for para in doc.paragraphs])
+
+    return text

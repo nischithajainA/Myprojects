@@ -1,13 +1,144 @@
-<h1>AI Resume Analyser</h1>
-<form action="/analyze" method="POST" enctype="multipart/form-data">
-    <label>Upload Resume:</label>
-    <input type="file" name="resume" required>
+<!DOCTYPE html>
 
-    <label>Upload Job Description :</label>
-    <input type="file" name="jd">
+<html>
 
-    <label>OR</label>
-    <textarea name="jd_text" placeholder="Paste job description here"></textarea>
+<head>
 
-    <button type="submit">Analyze Resume</button>
-</form>
+    <title>AI Resume Analyzer</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="container mt-5">
+
+    <h1 class="mb-4">
+        AI Resume Analyzer
+    </h1>
+
+    <form action="/analyze" method="POST" enctype="multipart/form-data" onsubmit="return validateAndShowLoader()">
+
+        <div class="card shadow p-4 mt-4">
+
+            <label class="form-label">
+                Upload Resume
+            </label>
+
+            <input type="file" name="resume" class="form-control" required>
+
+        </div>
+
+        <div class="card shadow p-4 mt-4">
+
+            <label class="form-label">
+                Job Description
+            </label>
+
+            <input type="file" name="jd" id="jd_file" class="form-control">
+
+            <br>
+
+            <label class="form-label">
+                Or Paste Job Description
+            </label>
+
+            <textarea name="jd_text" id="jd_text" class="form-control" rows="10">
+            </textarea>
+
+        </div>
+
+        <!-- Analyze Button -->
+
+        <div class="text-center mt-4">
+
+            <button id="analyzeBtn" type="submit" class="btn btn-primary btn-lg px-5">
+
+                <span id="buttonText">
+                    Analyze Resume
+                </span>
+                <!-- Small Spinner -->
+
+                <span id="spinner" class="spinner-border spinner-border-sm ms-2" style="display:none;">
+                </span>
+
+            </button>
+
+        </div>
+
+    </form>
+    <!-- Loading Overlay -->
+
+    <div id="loadingOverlay" style="
+        display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(255,255,255,0.8);
+        z-index:9999;
+        ">
+
+        <div class="d-flex flex-column justify-content-center align-items-center h-100">
+
+            <div class="spinner-border text-primary" style="width:4rem;height:4rem;">
+
+            </div>
+
+            <h4 class="mt-4">
+
+                Analyzing Resume...
+
+            </h4>
+
+            <p class="text-muted">
+
+                AI processing may take a few seconds
+
+            </p>
+
+        </div>
+
+    </div>
+    <script>
+
+        function validateAndShowLoader() {
+
+            const jdFile = document.getElementById("jd_file").value;
+            const jdText = document.getElementById("jd_text").value.trim();
+
+            if (jdFile === "" && jdText === "") {
+                alert("Please upload a JD file or paste job description.");
+                return false;
+            }
+            // Show overlay
+
+            document.getElementById(
+                "loadingOverlay"
+            ).style.display = "block";
+
+            // Disable button
+
+            document.getElementById(
+                "analyzeBtn"
+            ).disabled = true;
+
+            // Change button text
+
+            document.getElementById(
+                "buttonText"
+            ).innerText = "Analyzing...";
+
+            // Show spinner inside button
+
+            document.getElementById(
+                "spinner"
+            ).style.display = "inline-block";
+            return true;
+        }
+
+    </script>
+
+</body>
+
+</html>
